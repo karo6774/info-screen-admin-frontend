@@ -5,7 +5,7 @@ import storage from "redux-persist/lib/storage";
 const Reducer = (state, action) => {
     switch (action.type) {
         case "login":
-            return Object.assign({}, state, {token: action.token});
+            return Object.assign({}, state, {token: action.token, username: action.username});
         default:
             return state;
     }

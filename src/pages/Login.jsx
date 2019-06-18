@@ -25,7 +25,7 @@ const Login = props => {
             const token = await createToken(username, password);
             setLoading(false);
 
-            dispatch({type: 'login', token})
+            dispatch({type: 'login', token, username})
         }catch (e) {
             setLoading(false);
             switch(e.status) {
