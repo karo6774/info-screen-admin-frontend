@@ -1,0 +1,5 @@
+.meal-plan {
+  > * + * {
+    margin-top: 1em;
+  }
+}

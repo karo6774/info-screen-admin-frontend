@@ -6,15 +6,17 @@ const Reducer = (state, action) => {
     switch (action.type) {
         case "login":
             return Object.assign({}, state, {token: action.token, username: action.username});
+        case "logout":
+            return Object.assign({}, state, {token: undefined, username: undefined});
         default:
             return state;
     }
-    return state;
 };
 
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: ["cache"]
 };
 
 const persistedReducer = persistReducer(persistConfig, Reducer);

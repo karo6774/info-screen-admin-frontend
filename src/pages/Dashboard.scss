@@ -1,0 +1,22 @@
+.dashboard-main {
+  $card-width: 480px;
+  $column-breakpoint: $card-width*2+50px;
+
+  padding-top: 3em;
+  width: fit-content;
+  min-width: 400px;
+  margin: 0 auto;
+
+  @media (min-width: $column-breakpoint) {
+    columns: 2;
+  }
+
+  > * {
+    width: $card-width;
+    break-inside: avoid;
+  }
+
+  > * + * {
+    margin-top: 1em;
+  }
+}

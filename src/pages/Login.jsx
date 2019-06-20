@@ -26,9 +26,9 @@ const Login = props => {
             setLoading(false);
 
             dispatch({type: 'login', token, username})
-        }catch (e) {
+        } catch (e) {
             setLoading(false);
-            switch(e.status) {
+            switch (e.status) {
                 case 422:
                     setErrorMessage("Unknown username or password");
                     break;
@@ -44,36 +44,38 @@ const Login = props => {
     }
 
     return (
-        <Card
-            title="Login"
-            className="login-card"
-            actions={[
-                <Button
-                    type="primary"
-                    disabled={!enableLoginButton}
-                    onClick={performLogin}
-                    loading={loading}
-                >Login</Button>
-            ]}>
-            <span className="login-form">
-                {errorMessage && <Alert type="error" message={errorMessage}/>}
-                <Input
-                    type="email"
-                    placeholder="Username"
-                    prefix={<Icon type="user" style={{opacity: 0.25}}/>}
-                    value={username}
-                    onChange={wrapSetter(setUsername)}
-                    onPressEnter={performLogin}
-                />
-                <Input.Password
-                    placeholder="Password"
-                    prefix={<Icon type="lock" style={{opacity: 0.25}}/>}
-                    value={password}
-                    onChange={wrapSetter(setPassword)}
-                    onPressEnter={performLogin}
-                />
-            </span>
-        </Card>
+        <div className="login-page">
+            <Card
+                title="Login"
+                className="login-card"
+                actions={[
+                    <Button
+                        type="primary"
+                        disabled={!enableLoginButton}
+                        onClick={performLogin}
+                        loading={loading}
+                    >Login</Button>
+                ]}>
+                <span className="login-form">
+                    {errorMessage && <Alert type="error" message={errorMessage}/>}
+                    <Input
+                        type="email"
+                        placeholder="Username"
+                        prefix={<Icon type="user" style={{opacity: 0.25}}/>}
+                        value={username}
+                        onChange={wrapSetter(setUsername)}
+                        onPressEnter={performLogin}
+                    />
+                    <Input.Password
+                        placeholder="Password"
+                        prefix={<Icon type="lock" style={{opacity: 0.25}}/>}
+                        value={password}
+                        onChange={wrapSetter(setPassword)}
+                        onPressEnter={performLogin}
+                    />
+                </span>
+            </Card>
+        </div>
     );
 };
 
