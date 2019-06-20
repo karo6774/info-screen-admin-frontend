@@ -69,7 +69,7 @@ export default function Lunchplan() {
 
     return (
         <div>
-            <Card title="Lunchplans"
+            <Card title="Lunchplan"
                   actions={[<Button
                       disabled={!enableEditor}
                       type="primary"
