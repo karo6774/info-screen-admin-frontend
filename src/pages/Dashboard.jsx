@@ -24,9 +24,8 @@ const Dashboard = () => {
                 </span>
             }/>
             <main className="dashboard-main">
-                <div className="lunchplan"><Lunchplan/></div>
-                <div className="message"><Message/></div>
-                <div className="message2"><Message/></div>
+                <Lunchplan/>
+                <Message/>
             </main>
         </div>
     );
