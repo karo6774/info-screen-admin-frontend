@@ -65,7 +65,7 @@ export default function Lunchplan() {
     });
 
     const loading = loadingMeals || loadingMealplan;
-    const enableEditor = !loadingMeals && !loadingMealplan && week === loadedWeek && !savingLunchplan;
+    const enableEditor = !loading && week === loadedWeek && !savingLunchplan;
 
     return (
         <div>
@@ -73,6 +73,7 @@ export default function Lunchplan() {
                   actions={[<Button
                       disabled={!enableEditor}
                       type="primary"
+                      loading={savingLunchplan}
                       onClick={() => {
                           console.log(mealplanDiff);
                           if (Object.entries(mealplanDiff).length > 0) {
@@ -91,20 +92,22 @@ export default function Lunchplan() {
                     defaultValue={week}
                     onChange={setWeek}
                 />
-                <Button style={{marginLeft: '1em'}} onClick={() => {
-                    return setLoadedWeek(week);
-                }}>Load</Button>
+                <Button
+                    style={{marginLeft: '1em'}}
+                    loading={loading}
+                    onClick={() => {
+                        return setLoadedWeek(week);
+                    }}>
+                    Load
+                </Button>
                 <Divider/>
-                {loading
-                    ? <span>Loading...</span>
-                    : <Mealplan
-                        week={week}
-                        meals={meals}
-                        mealplan={editorMealplan}
-                        onChange={setEditorMealplan}
-                        enabled={enableEditor}
-                    />
-                }
+                <Mealplan
+                    week={week}
+                    meals={meals}
+                    mealplan={editorMealplan}
+                    onChange={setEditorMealplan}
+                    enabled={enableEditor}
+                />
             </Card>
         </div>
     );
