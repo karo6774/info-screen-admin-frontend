@@ -3,3 +3,13 @@
     margin-top: 1em;
   }
 }
+
+.meal-select {
+  .ant-select-selection-selected-value {
+    width: 100%;
+
+    .times-chosen {
+      display: none;
+    }
+  }
+}
