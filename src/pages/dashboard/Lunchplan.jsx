@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button, Card, Divider, InputNumber} from "antd";
 import * as Moment from "moment";
 import Mealplan from "../../components/Mealplan";
 import {useMutationValue, useQueryValue} from "../../utility";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import {GraphQLContext} from "graphql-react";
+import {useSelector} from "react-redux";
+import {operateMutation} from "../../api";
 
 // language=GraphQL
 const lunchplanQuery = week => `{
@@ -32,6 +35,13 @@ const lunchplanMutation = `
         saveLunchplan(lunchplan: {week: $week, mealplan: $mealplan})
     }`;
 
+// language=GraphQL
+const createMealMutation = `
+    mutation($description: String!) {
+        createMeal(meal: {description: $description})
+    }
+`;
+
 function diffMealplan(base, other) {
     const res = {};
     ["monday", "tuesday", "wednesday", "thursday", "friday"].forEach(day => {
@@ -49,6 +59,8 @@ function diffMealplan(base, other) {
 }
 
 export default function Lunchplan() {
+    const token = useSelector(it => it.token);
+
     const [week, setWeek] = useState(Moment().isoWeek());
     const [loadedWeek, setLoadedWeek] = useState(week);
 
@@ -63,6 +75,7 @@ export default function Lunchplan() {
         week: loadedWeek,
         mealplan: mealplanDiff
     });
+    const graphql = useContext(GraphQLContext);
 
     const loading = loadingMeals || loadingMealplan;
     const enableEditor = !loading && week === loadedWeek && !savingLunchplan;
@@ -107,6 +120,11 @@ export default function Lunchplan() {
                     mealplan={editorMealplan}
                     onChange={setEditorMealplan}
                     enabled={enableEditor}
+                    onAddMeal={(meal) => {
+                        return operateMutation(graphql, createMealMutation, token, {
+                            description: meal
+                        }).then(reloadMeals);
+                    }}
                 />
             </Card>
         </div>

@@ -36,20 +36,26 @@ export function useQuery(query) {
     });
 }
 
+const mutationOptions = (mutation, token, variables) => ({
+    fetchOptionsOverride(options) {
+        options.headers = options.headers || {};
+        options.headers['Authorization'] = `Bearer ${token}`;
+        options.url = `${Host}/graphql`;
+    },
+    loadOnMount: false,
+    loadOnReload: false,
+    loadOnReset: false,
+    operation: {
+        query: mutation,
+        variables
+    }
+});
+
 export function useMutation(mutation, variables) {
     const token = useSelector(it => it.token);
-    return useGraphQL({
-        fetchOptionsOverride(options) {
-            options.headers = options.headers || {};
-            options.headers['Authorization'] = `Bearer ${token}`;
-            options.url = `${Host}/graphql`;
-        },
-        loadOnMount: false,
-        loadOnReload: false,
-        loadOnReset: false,
-        operation: {
-            query: mutation,
-            variables
-        }
-    })
+    return useGraphQL(mutationOptions(mutation, token, variables));
+}
+
+export function operateMutation(graphql, mutation, token, variables) {
+    return graphql.operate(mutationOptions(mutation, token, variables)).cacheValuePromise;
 }

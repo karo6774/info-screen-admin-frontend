@@ -2,7 +2,7 @@ import React from "react";
 import {Divider, Icon, Select} from "antd";
 
 const SimpleSelect = ({
-                          value, items, onChange, style, enabled = true, showAddItem, onAddItem,
+                          value, items, onChange, style, enabled = true, showAddItem, onAddItem, addItemContent,
                           renderItem = (it) => it
                       }) => {
     return (
@@ -20,8 +20,8 @@ const SimpleSelect = ({
             dropdownRender={menu => (
                 showAddItem
                     ? <React.Fragment>
-                        <div style={{padding: '8px', cursor: 'pointer'}} onClick={onAddItem}>
-                            <Icon type="plus"/> Add meal
+                        <div style={{padding: '8px', cursor: 'pointer'}} onMouseDown={onAddItem}>
+                            <Icon type="plus"/> {addItemContent}
                         </div>
                         <Divider style={{margin: '4px 0'}}/>
                         {menu}

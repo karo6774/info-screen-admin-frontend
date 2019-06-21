@@ -1,6 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Mealplan.scss";
 import SimpleSelect from "./SimpleSelect";
+import {Input, Modal} from "antd";
+import {wrapSetter} from "../utility";
 
 const days = [
     {id: "monday", title: "Monday"},
@@ -10,9 +12,36 @@ const days = [
     {id: "friday", title: "Friday"}
 ];
 
-const Mealplan = ({week, meals, mealplan, onChange, enabled = true}) => {
+const Mealplan = ({week, meals, mealplan, onChange, enabled = true, onAddMeal}) => {
+    const [showModal, setShowModal] = useState(false);
+
+    const [newMeal, setNewMeal] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const onSaveMeal = () => {
+        setLoading(true);
+        onAddMeal(newMeal).then(() => {
+            setLoading(false);
+            setShowModal(false);
+            setNewMeal("");
+        });
+    };
+
     return (
         <div className="meal-plan">
+            <Modal
+                title="Add meal"
+                visible={showModal}
+                confirmLoading={loading}
+                onOk={onSaveMeal}
+            >
+                <Input
+                    value={newMeal}
+                    onChange={wrapSetter(setNewMeal)}
+                    placeholder="Meal description"
+                    onPressEnter={onSaveMeal}
+                />
+            </Modal>
             {days.map(({id, title}) =>
                 <div key={id} style={{overflow: "auto", display: 'table', width: '100%'}}>
                     <span style={{display: 'table-cell', verticalAlign: 'middle'}}>{title}</span>
@@ -27,10 +56,8 @@ const Mealplan = ({week, meals, mealplan, onChange, enabled = true}) => {
                             )}
                         style={{width: '340px', float: 'right'}}
                         showAddItem={true}
-                        onAddItem={() => {
-                            console.log("onAddItem");
-                            return setShowModal(true);
-                        }}
+                        onAddItem={() => setShowModal(true)}
+                        addItemContent="Add meal"
                         renderItem={it => (
                             <React.Fragment>
                                 {it.description}
