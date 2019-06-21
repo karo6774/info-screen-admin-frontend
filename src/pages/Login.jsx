@@ -4,8 +4,7 @@ import "./Login.scss";
 import {Alert, Button, Card, Icon, Input} from "antd";
 import {createToken} from "../api";
 import {useDispatch} from "react-redux";
-
-const wrapSetter = set => e => set(e.target.value);
+import {wrapSetter} from "../utility";
 
 const Login = props => {
     const [username, setUsername] = useState("");

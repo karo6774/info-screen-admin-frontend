@@ -21,3 +21,5 @@ export function useMutationValue(mutation, variables) {
     const {loading, load} = useMutation(mutation, variables);
     return [loading, load];
 }
+
+export const wrapSetter = set => e => set(e.target.value);
