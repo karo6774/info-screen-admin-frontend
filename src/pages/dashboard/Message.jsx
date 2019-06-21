@@ -39,7 +39,7 @@ export default function Message() {
                   >
                       Save
                   </Button>]}>
-                <p>
+                <span>
                     <Card size="small" type="inner" title="Current message" style={{whiteSpace: 'pre-wrap'}}>
                         {loading
                             ?
@@ -55,7 +55,7 @@ export default function Message() {
                             </div>
                             : <span><h4>{newestMessage.header}</h4>{newestMessage.text}</span>}
                     </Card>
-                </p>
+                </span>
                 <Divider style={{marginBottom: '2px'}} orientation="left">Update message</Divider>
                 <Input
                     placeholder="Header"
