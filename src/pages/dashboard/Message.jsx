@@ -6,6 +6,9 @@ import {useMutationValue, useQueryValue, wrapSetter} from "../../utility";
 // language=GraphQL
 const newestMessageQuery = `{
     newestMessage {
+        createdBy {
+            username
+        }
         date
         header
         text
@@ -53,7 +56,12 @@ export default function Message() {
                                     indicator={<Icon type="loading" style={{fontSize: 24}} spin/>}
                                 />
                             </div>
-                            : <span><h4>{newestMessage.header}</h4>{newestMessage.text}</span>}
+                            : <span>
+                                <h4>{newestMessage.header}</h4>
+                                {newestMessage.text}
+                                <Divider style={{margin: '8px 0'}}/>
+                                Written by <b>{newestMessage.createdBy.username}</b> on <b>{newestMessage.date}</b>
+                            </span>}
                     </Card>
                 </span>
                 <Divider style={{marginBottom: '2px'}} orientation="left">Update message</Divider>
